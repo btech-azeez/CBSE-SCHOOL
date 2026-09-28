@@ -1,0 +1,94 @@
+@model CBSESchool.Models.Mark
+@{
+    ViewData["Title"] = "CBSE Evaluation Marks Entry";
+    var exam = ViewBag.Exam as CBSESchool.Models.Exam;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-success text-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-pencil-square me-2"></i> Enter Marks & Calculate CBSE Grades</h5>
+                @if (exam != null)
+                {
+                    <small class="text-light">Exam: <strong>@exam.ExamName</strong></small>
+                }
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="EnterMarks" method="post">
+                    <input type="hidden" asp-for="ExamId" />
+
+                    <div class="mb-3">
+                        <label asp-for="StudentId" class="form-label fw-bold">Select Student *</label>
+                        <select asp-for="StudentId" asp-items="ViewBag.Students" class="form-select" required></select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="SubjectId" class="form-label fw-bold">Select Subject *</label>
+                        <select asp-for="SubjectId" asp-items="ViewBag.Subjects" class="form-select" required></select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label asp-for="MarksObtained" class="form-label fw-bold">Marks Obtained *</label>
+                            <input asp-for="MarksObtained" id="txtMarksObtained" type="number" step="0.5" class="form-control" placeholder="e.g. 88.5" required />
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label asp-for="MaxMarks" class="form-label fw-bold">Maximum Marks</label>
+                            <input asp-for="MaxMarks" id="txtMaxMarks" type="number" class="form-control" value="100" />
+                        </div>
+                    </div>
+
+                    <!-- Real-Time AJAX Grade Calculation Banner -->
+                    <div id="ajaxGradeBanner" class="alert alert-info border-info mt-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="bi bi-info-circle-fill me-1"></i> <strong>Live CBSE Grade Preview:</strong>
+                                <span id="lblGradeResult" class="badge bg-warning text-dark fs-6 ms-2">A1</span>
+                                <span id="lblPercentage" class="text-primary fw-bold ms-2">(0%)</span>
+                            </div>
+                            <div id="lblRemarks" class="small text-muted italic">Type marks above to calculate live grade via AJAX</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to Exams</a>
+                        <button type="submit" class="btn btn-success fw-bold"><i class="bi bi-save me-1"></i> Record & Save Evaluation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const txtMarks = document.getElementById('txtMarksObtained');
+            const txtMax = document.getElementById('txtMaxMarks');
+            const lblGrade = document.getElementById('lblGradeResult');
+            const lblPercentage = document.getElementById('lblPercentage');
+            const lblRemarks = document.getElementById('lblRemarks');
+
+            function triggerAjaxGradeCalculation() {
+                const marks = parseFloat(txtMarks.value);
+                const max = parseFloat(txtMax.value) || 100;
+                if (!isNaN(marks)) {
+                    calculateGradeAjax(marks, max, function (data) {
+                        lblGrade.textContent = data.grade;
+                        lblPercentage.textContent = `(${data.percentage}%)`;
+                        lblRemarks.textContent = data.remarks;
+                        
+                        lblGrade.className = data.isPassing 
+                            ? 'badge bg-warning text-dark fs-6 ms-2' 
+                            : 'badge bg-danger text-white fs-6 ms-2';
+                    });
+                }
+            }
+
+            txtMarks.addEventListener('input', triggerAjaxGradeCalculation);
+            txtMax.addEventListener('input', triggerAjaxGradeCalculation);
+        });
+    </script>
+}

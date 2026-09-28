@@ -1,0 +1,53 @@
+@model CBSESchool.Models.Notice
+@{
+    ViewData["Title"] = "Post Announcement";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-danger text-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-megaphone-fill me-2"></i> Post School Circular / Announcement</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label fw-bold">Title / Headline *</label>
+                        <input asp-for="Title" class="form-control" placeholder="e.g. CBSE Pre-Board Date Sheet Announcement" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Content" class="form-label fw-bold">Announcement Content *</label>
+                        <textarea asp-for="Content" class="form-control" rows="5" placeholder="Detailed notification details..." required></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="TargetRole" class="form-label fw-bold">Target Audience</label>
+                            <select asp-for="TargetRole" class="form-select">
+                                <option value="All">All School Users</option>
+                                <option value="Students">Students Only</option>
+                                <option value="Teachers">Teachers / Faculty Only</option>
+                                <option value="Parents">Parents Only</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PostedBy" class="form-label fw-bold">Issued By</label>
+                            <input asp-for="PostedBy" class="form-control" value="Principal Office" />
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input asp-for="IsImportant" class="form-check-input" />
+                        <label asp-for="IsImportant" class="form-check-label fw-bold text-danger">Mark as Important / High Priority Banner</label>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Cancel</a>
+                        <button type="submit" class="btn btn-danger fw-bold"><i class="bi bi-send-fill me-1"></i> Publish Announcement</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

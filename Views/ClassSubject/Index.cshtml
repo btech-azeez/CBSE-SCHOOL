@@ -1,0 +1,85 @@
+@model IEnumerable<CBSESchool.Models.SchoolClass>
+@{
+    ViewData["Title"] = "Classes & CBSE Curriculum Subjects";
+    var subjects = ViewBag.Subjects as IEnumerable<CBSESchool.Models.Subject> ?? new List<CBSESchool.Models.Subject>();
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold text-navy"><i class="bi bi-journal-bookmark-fill text-warning"></i> Classes & CBSE Curriculum Subjects</h2>
+        <p class="text-muted mb-0">Manage classes, sections, streams, and subject course codes</p>
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="d-flex gap-2">
+            <a asp-action="CreateClass" class="btn btn-warning fw-bold text-dark"><i class="bi bi-plus-lg me-1"></i> Add Class</a>
+            <a asp-action="CreateSubject" class="btn btn-primary fw-bold"><i class="bi bi-book-half me-1"></i> Add Subject Code</a>
+        </div>
+    }
+</div>
+
+<div class="row g-4">
+    <!-- Classes Overview -->
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-navy text-white py-3" style="background-color: #0F2C59;">
+                <h5 class="mb-0 fw-bold"><i class="bi bg-warning text-dark px-2 py-1 rounded me-2">Classes</i> Active School Classes</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Class Name</th>
+                            <th>Section</th>
+                            <th>Stream</th>
+                            <th>Capacity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cls in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">@cls.ClassName</td>
+                                <td><span class="badge bg-info text-dark">Section @cls.Section</span></td>
+                                <td><span class="badge bg-secondary">@cls.Stream</span></td>
+                                <td>@cls.Capacity Students</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subjects List -->
+    <div class="col-lg-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-book me-2"></i> CBSE Subject Codes & Pass Marks</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Code</th>
+                            <th>Subject Name</th>
+                            <th>Class</th>
+                            <th>Pass / Max</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var sub in subjects)
+                        {
+                            <tr>
+                                <td><span class="badge bg-dark">@sub.SubjectCode</span></td>
+                                <td class="fw-bold">@sub.SubjectName</td>
+                                <td>Class ID: @sub.ClassId</td>
+                                <td><span class="text-success font-weight-bold">@sub.PassMarks</span> / @sub.MaxMarks</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

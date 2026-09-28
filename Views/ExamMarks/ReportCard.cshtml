@@ -1,0 +1,113 @@
+@model CBSESchool.Models.ViewModels.ReportCardViewModel
+@{
+    ViewData["Title"] = "CBSE Report Card - " + Model.Student.FullName;
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <!-- Print Action -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a asp-action="Index" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Back to Exams</a>
+            <button onclick="window.print();" class="btn btn-navy btn-sm text-white" style="background-color: #0F2C59;"><i class="bi bi-printer-fill me-1"></i> Print Official Report Card</button>
+        </div>
+
+        <!-- Official Report Card Sheet -->
+        <div class="card shadow-lg border-navy p-4" style="border: 3px double #0F2C59; background-color: #fff;">
+            <!-- Header Header -->
+            <div class="text-center border-bottom border-dark pb-3 mb-4">
+                <i class="bi bi-bank fs-1 text-warning"></i>
+                <h2 class="fw-bold text-uppercase mb-0" style="color: #0F2C59;">NATIONAL CBSE PUBLIC SCHOOL</h2>
+                <p class="mb-0 text-muted small">Affiliated to Central Board of Secondary Education, New Delhi</p>
+                <h4 class="mt-2 fw-bold text-decoration-underline text-success">ACADEMIC EVALUATION & REPORT CARD</h4>
+                <p class="badge bg-navy text-white px-3 py-2 fs-6 mb-0" style="background-color: #0F2C59;">@Model.Exam.ExamName (@Model.Exam.AcademicYear)</p>
+            </div>
+
+            <!-- Student Bio Data -->
+            <div class="row g-2 mb-4 bg-light p-3 rounded border">
+                <div class="col-md-6">
+                    <div><strong>Student Full Name:</strong> <span class="text-uppercase fw-bold text-primary">@Model.Student.FullName</span></div>
+                    <div><strong>CBSE Roll Number:</strong> <span class="badge bg-dark">@Model.Student.RollNumber</span></div>
+                    <div><strong>Class & Section:</strong> @Model.SchoolClass.ClassName - @Model.SchoolClass.Section</div>
+                </div>
+                <div class="col-md-6">
+                    <div><strong>Father / Mother Name:</strong> @Model.Student.ParentName</div>
+                    <div><strong>Date of Birth:</strong> @Model.Student.DateOfBirth.ToString("dd/MM/yyyy")</div>
+                    <div><strong>Date of Issue:</strong> @DateTime.UtcNow.ToString("dd MMMM yyyy")</div>
+                </div>
+            </div>
+
+            <!-- Marks Table -->
+            <div class="table-responsive mb-4">
+                <table class="table table-bordered align-middle text-center mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Code</th>
+                            <th class="text-start">Subject Name</th>
+                            <th>Max Marks</th>
+                            <th>Marks Obtained</th>
+                            <th>Positional Grade</th>
+                            <th class="text-start">Qualitative Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var res in Model.SubjectResults)
+                        {
+                            <tr>
+                                <td><span class="badge bg-secondary">@res.SubjectCode</span></td>
+                                <td class="text-start fw-bold">@res.SubjectName</td>
+                                <td>@res.MaxMarks</td>
+                                <td class="fw-bold fs-6 text-primary">@res.MarksObtained</td>
+                                <td><span class="badge bg-warning text-dark fs-6 px-3">@res.Grade</span></td>
+                                <td class="text-start small">@res.Remarks</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light fw-bold">
+                        <tr>
+                            <td colspan="2" class="text-end">OVERALL TOTAL:</td>
+                            <td>@Model.TotalMaxMarks</td>
+                            <td class="text-primary fs-5">@Model.TotalMarksObtained</td>
+                            <td><span class="badge bg-success fs-6">@Model.OverallGrade</span></td>
+                            <td class="text-start">Cumulative Evaluation</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Performance Summary Badges -->
+            <div class="row g-3 mb-4 text-center">
+                <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light">
+                        <small class="text-muted d-block">AGGREGATE PERCENTAGE</small>
+                        <span class="display-6 fw-bold text-primary">@Model.OverallPercentage%</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light">
+                        <small class="text-muted d-block">CBSE CGPA (Out of 10.0)</small>
+                        <span class="display-6 fw-bold text-success">@Model.CGPA</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 border rounded bg-light">
+                        <small class="text-muted d-block">RESULT STATUS</small>
+                        <span class="fw-bold @(Model.FinalResultStatus.Contains("PASSED") ? "text-success fs-5" : "text-danger fs-6")">@Model.FinalResultStatus</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signatures Footer -->
+            <div class="row mt-5 pt-4 text-center">
+                <div class="col-4">
+                    <div class="border-top border-dark pt-2 fw-bold text-muted">Class Teacher</div>
+                </div>
+                <div class="col-4">
+                    <div class="border-top border-dark pt-2 fw-bold text-muted">Exam Controller</div>
+                </div>
+                <div class="col-4">
+                    <div class="border-top border-dark pt-2 fw-bold text-muted">Principal Seal & Signature</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

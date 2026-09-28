@@ -1,0 +1,84 @@
+@model CBSESchool.Models.Student
+@{
+    ViewData["Title"] = "Enroll New Student";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-person-plus-fill me-2"></i> Enroll New CBSE Student</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="FullName" class="form-label fw-bold">Full Name *</label>
+                            <input asp-for="FullName" class="form-control" placeholder="e.g. Aarav Sharma" required />
+                            <span asp-validation-for="FullName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="ClassId" class="form-label fw-bold">Class & Section *</label>
+                            <select asp-for="ClassId" asp-items="ViewBag.ClassId" class="form-select" required></select>
+                            <span asp-validation-for="ClassId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="DateOfBirth" class="form-label fw-bold">Date of Birth *</label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control" required />
+                            <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Gender" class="form-label fw-bold">Gender *</label>
+                            <select asp-for="Gender" class="form-select">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="ParentName" class="form-label fw-bold">Parent / Guardian Name *</label>
+                            <input asp-for="ParentName" class="form-control" placeholder="Father or Mother Name" required />
+                            <span asp-validation-for="ParentName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="ParentContact" class="form-label fw-bold">Parent Phone Number *</label>
+                            <input asp-for="ParentContact" class="form-control" placeholder="+91 9876543210" required />
+                            <span asp-validation-for="ParentContact" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="ParentEmail" class="form-label fw-bold">Parent Email Address</label>
+                            <input asp-for="ParentEmail" type="email" class="form-control" placeholder="parent@example.com" />
+                            <span asp-validation-for="ParentEmail" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="RollNumber" class="form-label fw-bold">Roll Number (Optional - Auto Generated if empty)</label>
+                            <input asp-for="RollNumber" class="form-control" placeholder="e.g. CBSE2026-X-05" />
+                            <span asp-validation-for="RollNumber" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Address" class="form-label fw-bold">Residential Address</label>
+                            <textarea asp-for="Address" class="form-control" rows="2" placeholder="Full residential street address..."></textarea>
+                            <span asp-validation-for="Address" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Cancel</a>
+                        <button type="submit" class="btn btn-primary fw-bold"><i class="bi bi-check-circle me-1"></i> Enroll Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

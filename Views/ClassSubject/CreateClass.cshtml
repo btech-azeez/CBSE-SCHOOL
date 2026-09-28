@@ -1,0 +1,47 @@
+@model CBSESchool.Models.SchoolClass
+@{
+    ViewData["Title"] = "Create New Class";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-warning text-dark py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-plus-circle me-2"></i> Add New Class & Section</h5>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="CreateClass" method="post">
+                    <div class="mb-3">
+                        <label asp-for="ClassName" class="form-label fw-bold">Class Name *</label>
+                        <input asp-for="ClassName" class="form-control" placeholder="e.g. Class XI" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Section" class="form-label fw-bold">Section *</label>
+                        <input asp-for="Section" class="form-control" placeholder="e.g. A, B, C" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Stream" class="form-label fw-bold">Stream</label>
+                        <select asp-for="Stream" class="form-select">
+                            <option value="General">General / All</option>
+                            <option value="Science">Science (PCM/PCB)</option>
+                            <option value="Commerce">Commerce</option>
+                            <option value="Arts">Humanities / Arts</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Capacity" class="form-label fw-bold">Class Capacity</label>
+                        <input asp-for="Capacity" type="number" class="form-control" value="40" />
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Cancel</a>
+                        <button type="submit" class="btn btn-warning fw-bold text-dark"><i class="bi bi-check-circle me-1"></i> Create Class</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

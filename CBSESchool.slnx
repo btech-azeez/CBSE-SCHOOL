@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CBSESchool.csproj" />
+  <Project Path="CBSESchool.Tests/CBSESchool.Tests.csproj" />
+</Solution>

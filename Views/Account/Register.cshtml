@@ -1,0 +1,67 @@
+@model CBSESchool.Models.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "User Registration";
+}
+
+<div class="row justify-content-center my-4">
+    <div class="col-md-6">
+        <div class="card shadow-lg border-0 rounded-3">
+            <div class="card-header text-white text-center py-4" style="background-color: #0F2C59;">
+                <i class="bi bi-person-plus-fill fs-1 text-warning"></i>
+                <h4 class="fw-bold mb-0 mt-2">Portal Registration</h4>
+                <p class="small text-light mb-0">Create your CBSE school portal account</p>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label font-weight-bold">Full Name</label>
+                        <input asp-for="FullName" class="form-control" placeholder="e.g. Ramesh Verma" required />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label font-weight-bold">Email Address</label>
+                        <input asp-for="Email" class="form-control" placeholder="user@cbse.school.edu" required />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Password" class="form-label font-weight-bold">Password</label>
+                            <input asp-for="Password" class="form-control" placeholder="••••••••" required />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label font-weight-bold">Confirm Password</label>
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="••••••••" required />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="RoleName" class="form-label font-weight-bold">Account Role</label>
+                        <select asp-for="RoleName" class="form-select">
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Teacher / Staff</option>
+                            <option value="Parent">Parent</option>
+                            <option value="Admin">Administrator</option>
+                        </select>
+                        <span asp-validation-for="RoleName" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning w-100 py-2 fw-bold text-dark">
+                        <i class="bi bi-check-circle-fill me-1"></i> Register Account
+                    </button>
+                </form>
+
+                <hr class="my-4" />
+
+                <div class="text-center">
+                    <p class="mb-0 text-muted small">Already registered? <a asp-action="Login" class="fw-bold text-primary">Login Here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

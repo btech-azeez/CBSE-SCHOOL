@@ -1,0 +1,45 @@
+## .NET / ASP.NET Core
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+x64/
+x86/
+build/
+bld/
+
+# Visual Studio cache/options directory
+.vs/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+# Uncomment if you use NuGet lock files:
+# packages.lock.json
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Logs
+*.log
+
+# Published output
+publish/
+
+# User secrets
+secrets.json
+appsettings.*.json
+
+# Keep appsettings.Development.json tracked (optional — remove if you don't want it)
+!appsettings.Development.json
+
+# OS
+.DS_Store
+Thumbs.db

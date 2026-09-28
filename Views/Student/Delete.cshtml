@@ -1,0 +1,30 @@
+@model CBSESchool.Models.Student
+@{
+    ViewData["Title"] = "Delete Student Record";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-danger">
+            <div class="card-header bg-danger text-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i> Confirm Student Deletion</h5>
+            </div>
+            <div class="card-body p-4 text-center">
+                <p class="lead">Are you sure you want to permanently delete the student record for <strong>@Model.FullName</strong>?</p>
+                <div class="alert alert-warning text-start">
+                    <div><strong>Roll No:</strong> @Model.RollNumber</div>
+                    <div><strong>Class:</strong> @(Model.SchoolClass?.ClassName ?? "Class " + Model.ClassId)</div>
+                    <div><strong>Parent:</strong> @Model.ParentName</div>
+                </div>
+
+                <form asp-action="Delete" method="post" class="mt-4">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex justify-content-center gap-3">
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4">Cancel</a>
+                        <button type="submit" class="btn btn-danger px-4 fw-bold"><i class="bi bi-trash-fill me-1"></i> Permanently Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
